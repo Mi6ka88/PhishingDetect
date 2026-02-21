@@ -4,22 +4,44 @@ data class ResultDetect(
     val countCriticalParams: Int,
     val foundParams: List<String>,
     val probability: Double,
+    val riskLevel: RiskLevel,
     val isPhishing: Boolean,
 ) {
-    companion object {
-        private const val MAX_ACCEPT_COUNT = 8L
+    enum class RiskLevel {
+        LOW,
+        MEDIUM,
+        HIGH
+    }
 
+    companion object {
         fun createResultDetect(
             countCriticalParams: Int,
-            foundParams: List<String>
+            foundParams: List<String>,
+            totalPossibleParams: Int
         ): ResultDetect {
-            val probabilityValue = (countCriticalParams.toDouble() / MAX_ACCEPT_COUNT * 100).coerceIn(0.0, 100.0)
-            val isPhishingValue = probabilityValue > 50.0
+            val probabilityValue = if (totalPossibleParams == 0) {
+                0.0
+            } else {
+                (countCriticalParams.toDouble() / totalPossibleParams * 100)
+                    .coerceIn(0.0, 100.0)
+            }
+            val riskLevel = when {
+                probabilityValue < 30 -> RiskLevel.LOW
+                probabilityValue < 60 -> RiskLevel.MEDIUM
+                else -> RiskLevel.HIGH
+            }
+
+            val isPhishingValue = when(riskLevel) {
+                RiskLevel.MEDIUM -> true
+                RiskLevel.HIGH -> true
+                RiskLevel.LOW -> false
+            }
 
             return ResultDetect(
                 countCriticalParams = countCriticalParams,
                 foundParams = foundParams,
                 probability = probabilityValue,
+                riskLevel = riskLevel,
                 isPhishing = isPhishingValue
             )
         }
