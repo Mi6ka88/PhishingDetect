@@ -2,8 +2,8 @@
 
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.0+-purple.svg)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2+-brightgreen.svg)
-![License](https://img.shields.io/badge/License-MIT-blue.svg)
-
+![React](https://img.shields.io/badge/React-18+-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5+-3178C6?logo=typescript&logoColor=white)
 ---
 
 🔐 О проекте
