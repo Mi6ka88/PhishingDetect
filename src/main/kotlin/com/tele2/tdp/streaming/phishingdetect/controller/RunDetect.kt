@@ -5,11 +5,13 @@ import com.tele2.tdp.streaming.phishingdetect.usecase.DomainWhoisInfo
 import com.tele2.tdp.streaming.phishingdetect.usecase.ResultDetect
 import org.jsoup.Jsoup
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@CrossOrigin(origins = ["http://localhost:3000"])
 class RunDetect(
     private val detectPhishing: DetectPhishing,
 ) {

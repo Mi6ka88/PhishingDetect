@@ -22,7 +22,8 @@ class DetectPhishing : SearchPhishing {
         }
         return createResultDetect(
             countCriticalParams = countAllParams,
-            foundParams = listPhishingParams
+            foundParams = listPhishingParams,
+            totalPossibleParams = allPhishingParams.size,
         )
     }
 
