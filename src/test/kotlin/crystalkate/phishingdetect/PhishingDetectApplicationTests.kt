@@ -1,4 +1,4 @@
-package com.tele2.tdp.streaming.phishingdetect
+package crystalkate.phishingdetect
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

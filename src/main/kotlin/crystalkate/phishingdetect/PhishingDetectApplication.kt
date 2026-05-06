@@ -1,4 +1,4 @@
-package com.tele2.tdp.streaming.phishingdetect
+package crystalkate.phishingdetect
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
