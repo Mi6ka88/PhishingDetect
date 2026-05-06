@@ -1,6 +1,8 @@
-spring:
-  application:
-    name: PhishingDetect
 server:
   port: 9090
 
+phishing:
+  whois:
+    url: "https://www.reg.ru/whois/?dname="
+    userAgent: "Mozilla/5.0"
+    timeout: 10000

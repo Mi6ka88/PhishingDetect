@@ -5,11 +5,14 @@ import com.tele2.tdp.streaming.phishingdetect.usecase.PhishingParams.Companion.a
 import com.tele2.tdp.streaming.phishingdetect.usecase.ResultDetect.Companion.createResultDetect
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 @Component
-class DetectPhishing : SearchPhishing {
-    private val whoIsUrl: String = "https://www.reg.ru/whois/?dname="
+class DetectPhishing(
+    @Value("\${phishing.whois.url}")
+    private val whoIsUrl: String
+) : SearchPhishing {
     override fun detectPhishingParams(doc: Document):ResultDetect {
         var countAllParams = 0
         val parsePage = doc.html()
@@ -36,12 +39,28 @@ class DetectPhishing : SearchPhishing {
             ?.parent()
             ?.nextElementSibling()
             ?.selectFirst("p.p-whois__text-cell")
-            .toString()
-            .substring(30,50)
+            ?.text()
+            ?.trim()
+            ?: checkOnInternationalDomains(content)
         return createDomainInfo(
             domain = domain,
             status = domainStatus,
-            registrationDate = registrationDate
+            registrationDate = registrationDate?:"Not found"
         )
+    }
+
+    internal fun extractDomain(url: String): String {
+        val regex = "(?:https?://)?(?:www\\.)?([^/]+)".toRegex()
+        return regex.find(url)?.groupValues?.get(1) ?: url
+    }
+
+    private fun checkOnInternationalDomains(doc: Document): String? {
+        val textCell = doc.selectFirst("p.p-whois__text-cell")
+        val fullText = textCell?.text() ?: return null
+
+        val pattern = Regex("Creation Date:\\s*(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+\\d{4})")
+        val matchResult = pattern.find(fullText)
+
+        return matchResult?.groupValues?.get(1)
     }
 }
