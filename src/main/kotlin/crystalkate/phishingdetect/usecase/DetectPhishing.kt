@@ -15,21 +15,31 @@ class DetectPhishing(
     private val whoIsUrl: String
 ) : SearchPhishing {
     override fun detectPhishingParams(doc: Document): ResultDetect {
-        var countAllParams = 0
-        val parsePage = doc.html()
-        val listPhishingParams = mutableListOf<String>()
-        allPhishingParams.forEach { search ->
-            if (parsePage.contains(search)) {
-                listPhishingParams.add(search)
-                countAllParams++
+        val htmlContent = doc.html()
+        val foundParams = mutableListOf<String>()
+        var totalWeight = 0.0
+        val maxPossibleWeight = allPhishingParams.sumOf { it.weight }
+
+        allPhishingParams.forEach { param ->
+            val isFound = if (param.regex != null) {
+                param.regex.containsMatchIn(htmlContent)
+            } else {
+                htmlContent.contains(param.pattern, ignoreCase = true)
+            }
+            if (isFound) {
+                foundParams.add(param.pattern)
+                totalWeight += param.weight
             }
         }
+
         return createResultDetect(
-            countCriticalParams = countAllParams,
-            foundParams = listPhishingParams,
-            totalPossibleParams = allPhishingParams.size,
+            countCriticalParams = foundParams.size,
+            foundParams = foundParams,
+            totalWeight = totalWeight,
+            maxPossibleWeight = maxPossibleWeight
         )
     }
+
 
     override fun checkOnWhoIs(domain: String): DomainWhoisInfo {
         val content = Jsoup.connect(whoIsUrl + domain).get()
