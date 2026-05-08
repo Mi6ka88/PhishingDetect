@@ -1,5 +1,7 @@
-package crystalkate.phishingdetect.usecase
+package crystalkate.phishingdetect.service
 
+import crystalkate.phishingdetect.domain.DomainWhoisInfo
+import crystalkate.phishingdetect.domain.ResultDetect
 import org.jsoup.nodes.Document
 
 interface SearchPhishing {

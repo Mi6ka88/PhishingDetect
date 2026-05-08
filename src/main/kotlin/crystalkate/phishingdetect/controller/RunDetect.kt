@@ -1,8 +1,8 @@
 package crystalkate.phishingdetect.controller
 
-import crystalkate.phishingdetect.usecase.DetectPhishing
-import crystalkate.phishingdetect.usecase.DomainWhoisInfo
-import crystalkate.phishingdetect.usecase.ResultDetect
+import crystalkate.phishingdetect.service.DetectPhishing
+import crystalkate.phishingdetect.domain.DomainWhoisInfo
+import crystalkate.phishingdetect.domain.ResultDetect
 import org.apache.commons.validator.routines.UrlValidator
 import org.jsoup.Jsoup
 import org.springframework.beans.factory.annotation.Value

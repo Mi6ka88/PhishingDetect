@@ -1,17 +1,15 @@
-package crystalkate.phishingdetect.usecase
+package crystalkate.phishingdetect.service
 
-import crystalkate.phishingdetect.usecase.DomainWhoisInfo.Companion.createDomainInfo
-import crystalkate.phishingdetect.usecase.PhishingParams.Companion.allPhishingParams
-import crystalkate.phishingdetect.usecase.ResultDetect.Companion.createResultDetect
+import crystalkate.phishingdetect.domain.DomainWhoisInfo
+import crystalkate.phishingdetect.domain.DomainWhoisInfo.Companion.createDomainInfo
+import crystalkate.phishingdetect.domain.ResultDetect
+import crystalkate.phishingdetect.domain.PhishingParams.Companion.allPhishingParams
+import crystalkate.phishingdetect.domain.ResultDetect.Companion.createResultDetect
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Component
 
-@Component
 class DetectPhishing(
-    @Value("\${phishing.whois.url}")
     private val whoIsUrl: String
 ) : SearchPhishing {
     override fun detectPhishingParams(doc: Document): ResultDetect {

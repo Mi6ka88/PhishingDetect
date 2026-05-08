@@ -1,4 +1,4 @@
-package crystalkate.phishingdetect.usecase
+package crystalkate.phishingdetect.domain
 
 data class ResultDetect(
     val countCriticalParams: Int,
