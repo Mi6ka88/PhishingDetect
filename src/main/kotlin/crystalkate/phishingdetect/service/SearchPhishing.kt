@@ -6,5 +6,9 @@ import org.jsoup.nodes.Document
 
 interface SearchPhishing {
     fun detectPhishingParams(doc: Document) : ResultDetect
-    fun checkOnWhoIs(domain:String) : DomainWhoisInfo
+    fun checkOnWhoIs(domain: String) : DomainWhoisInfo
+}
+
+interface HtmlFetcher {
+    fun fetchHtml(url: String): Document
 }

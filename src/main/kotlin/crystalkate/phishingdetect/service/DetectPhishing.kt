@@ -61,7 +61,7 @@ class DetectPhishing(
         val textCell = doc.selectFirst("p.p-whois__text-cell")
         val fullText = textCell?.text() ?: return null
 
-        val pattern = Regex("Creation Date:\\s*(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\+\\d{4})")
+        val pattern = Regex("Creation Date:\\s*(\\d{4}-\\d{2}-\\d{2})")
         val matchResult = pattern.find(fullText)
 
         return matchResult?.groupValues?.get(1)

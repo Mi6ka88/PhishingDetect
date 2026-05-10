@@ -27,6 +27,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("commons-validator:commons-validator:1.7")
 
+    testImplementation("io.mockk:mockk:1.13.2")
+    testImplementation("io.kotest.extensions:kotest-assertions-arrow-jvm:1.3.2")
+    testImplementation("io.kotest:kotest-runner-junit5:5.6.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
